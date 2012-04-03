@@ -15,18 +15,32 @@ function Game(){
 	this.trie;
 	this.words;
 	
+	this.r;
+	this.c;
+	
 	// keyboard listeners
-	/*document.game = this;
+	document.game = this;
 	document.onkeydown = function(e) { 
-		this.game.keys[e.which] = true 
+		//this.game.keys[e.which] = true 
 	};
 	document.onkeyup = function(e) { 
-		this.game.keys[e.which] = false;
-		// P key
-		if (e.which === 80) {
-			//this.game.paused = !this.game.paused;
+		//this.game.keys[e.which] = false;
+		if (this.game.r < 4 && this.game.c < 4 && (e.which >= 65 && e.which <= 90)) {
+			this.game.letters[this.game.r][this.game.c][0] = String.fromCharCode(e.which).toLowerCase();
+			this.game.c++;
+			if (this.game.c >= 4) {
+				this.game.c = 0;
+				this.game.r++;
+			}
+			this.game.draw();
 		}
-	}*/
+		
+		// Enter key
+		if (e.which === 13) {
+			//make sure all letters are filled in
+			console.log(this.game.allLettersValid());
+		}
+	}
 }
 
 // initialize the Game fields
@@ -58,9 +72,21 @@ Game.prototype.init = function() {
 		
 		this.findWords();
 		
+		this.r = 0;
+		this.c = 0;
+		
 		return true;
 	}
 	return false;
+}
+
+Game.prototype.allLettersValid = function() {
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			if (this.letters[i][j][0] === '') { return false;}
+		}
+	}
+	return true;
 }
 
 Game.prototype.findWords = function() {
@@ -159,8 +185,31 @@ Game.prototype.find_unused_neighbors = function(r, c, used, width, height) {
 
 // main drawing method, called at 60fps
 Game.prototype.draw = function() {
-	this.ctx.fillStyle = "rgb(0,0,0)";
-	this.ctx.fillRect(100, 100, 200, 200);
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			this.ctx.strokeStyle = "rgb(0,0,0)";
+			if (i === this.r && j === this.c) { this.ctx.fillStyle = "rgb(200,200,250)";}
+			else {this.ctx.fillStyle = "rgb(200,200,200)";}
+			this.ctx.strokeRect(j*CANVAS_WIDTH/4, i*CANVAS_HEIGHT/4, CANVAS_HEIGHT/4, CANVAS_WIDTH/4);
+			this.ctx.fillRect(j*CANVAS_WIDTH/4, i*CANVAS_HEIGHT/4, CANVAS_HEIGHT/4, CANVAS_WIDTH/4);	
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			this.ctx.strokeStyle = "rgb(0,0,0)";
+			this.ctx.fillStyle = "rgb(100,100,100)";
+			this.ctx.strokeRect(j*CANVAS_WIDTH/4 + 3*CANVAS_HEIGHT/16, i*CANVAS_HEIGHT/4 + 3*CANVAS_HEIGHT/16, CANVAS_WIDTH/16, CANVAS_HEIGHT/16);
+			this.ctx.fillRect(j*CANVAS_WIDTH/4 + 3*CANVAS_HEIGHT/16, i*CANVAS_HEIGHT/4 + 3*CANVAS_HEIGHT/16, CANVAS_WIDTH/16, CANVAS_HEIGHT/16);
+		}
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			this.ctx.font = "40px Arial";
+			this.ctx.textAlign = "center";
+			this.ctx.textBaseline = "middle";
+			this.ctx.fillText(this.letters[i][j][0].toUpperCase(), j*CANVAS_WIDTH/4 + CANVAS_WIDTH/8, i*CANVAS_HEIGHT/4 + CANVAS_HEIGHT/8);
+		}
+	}
 }
 
 // main game logic method, called at 60fps

@@ -18,11 +18,12 @@ App.prototype.start = function(){
 	game = new Game();
 	if(game.init()){
 		// Set up game loop to display new frames at a fixed rate
-		this.game_loop = setInterval(function(){
+		/*this.game_loop = setInterval(function(){
 			// Logically separating updating and drawing
 			game.update();
 			game.draw();
-		}, 1000 / 60);
+		}, 1000 / 60);*/
+		game.draw();
 	}else{
 		alert('You lack a browser able to run HTML5');
 	}
