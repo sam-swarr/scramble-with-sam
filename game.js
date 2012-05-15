@@ -48,11 +48,15 @@ function Game(){
 		}
 	}
 }
+function giveFocus (event) {
+	document.getElementById('hiddeninput').focus();
+}
 
 // initialize the Game fields
 Game.prototype.init = function() {
 	var canvas = $('#mainCanvas')[0];
 	canvas.addEventListener("mousedown", react, false);
+	canvas.addEventListener("mouseup", giveFocus, false);
     if(canvas.getContext){
     	/* This is the 2d rendering context you will be drawing on. */
 		this.ctx = canvas.getContext('2d');
@@ -292,12 +296,14 @@ Game.prototype.update = function() {
 }
 
 function react(event) {
+	var coords = relMouseCoords(event);
+	canvasX = coords.x;
+	canvasY = coords.y;
 	
-	var coords = getPosition(event);
-	var rc = [Math.floor(coords[1]/(CANVAS_HEIGHT/4)), Math.floor(coords[0]/(CANVAS_WIDTH/4))];
-	coords[0] = coords[0]%(CANVAS_WIDTH/4);
-	coords[1] = coords[1]%(CANVAS_HEIGHT/4);
-	if (coords[0] >= 60 && coords[0] <= 80 && coords[1] >= 60 && coords[1] <= 80) {
+	var rc = [Math.floor(canvasY/(CANVAS_HEIGHT/4)), Math.floor(canvasX/(CANVAS_WIDTH/4))];
+	canvasX = canvasX%(CANVAS_WIDTH/4);
+	canvasY = canvasY%(CANVAS_HEIGHT/4);
+	if (canvasX >= 60 && canvasX <= 80 && canvasY >= 60 && canvasY <= 80) {
 		game.multipliers[rc[0]][rc[1]] = (game.multipliers[rc[0]][rc[1]] + 1) % 5;
 		switch (game.multipliers[rc[0]][rc[1]]) {
 			case 0:
@@ -332,26 +338,21 @@ function react(event) {
 	game.draw();
 }
 
- function getPosition(event) {
-        var x = new Number();
-        var y = new Number();
-        var canvas = $('#mainCanvas')[0];
+function relMouseCoords(event){
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = $('#mainCanvas')[0];
 
-        if (event.x != undefined && event.y != undefined)
-        {
-          x = event.x;
-          y = event.y;
-        }
-        else // Firefox method to get the position
-        {
-          x = event.clientX + document.body.scrollLeft +
-              document.documentElement.scrollLeft;
-          y = event.clientY + document.body.scrollTop +
-              document.documentElement.scrollTop;
-        }
+    do{
+        totalOffsetX += currentElement.offsetLeft;
+        totalOffsetY += currentElement.offsetTop;
+    }
+    while(currentElement = currentElement.offsetParent)
 
-        x -= canvas.offsetLeft;
-        y -= canvas.offsetTop;
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
 
-        return [x, y];
+    return {x:canvasX, y:canvasY}
 }

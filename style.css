@@ -5,3 +5,7 @@
 #results tr,td{
 	border: 1px solid black;
 }
+
+#hiddeninput {
+	font-size: 16px;
+}
