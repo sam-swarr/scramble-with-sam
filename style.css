@@ -8,6 +8,8 @@
 
 #letter_table td {
 	border: 0px;
+	width: 70px;
+	height: 70px;
 }
 
 #letter_table input {
@@ -18,4 +20,11 @@
 	height: 70px;
 	text-align: center;
 	font-size: 24px;
+	padding: 0px;
+}
+
+@media screen and (max-device-width: 480px){
+  body{
+    -webkit-text-size-adjust: none;
+  }
 }

@@ -27,23 +27,9 @@ document.onkeyup = function(e) {
 			$('#' + currentInput).focus();
 		}
 	}
-	// 2 key was pressed (double letter/double word)
-	else if (e.which === 50 && currentInput >= 0 && currentInput < 16) {
-		if (multipliers[currentInput] < 3) {
-			multipliers[currentInput] = (multipliers[currentInput] + 1)%3;
-		} else {
-			multipliers[currentInput] = 1;
-		}
-		var new_x_offset = multipliers[currentInput]*-70;
-		$('#' + currentInput).css("background-position", new_x_offset);
-	}
-	// 3 key was pressed (triple letter/triple word)
-	else if (e.which === 51 && currentInput >= 0 && currentInput < 16) {
-		if (multipliers[currentInput] > 2) {
-			multipliers[currentInput] = (multipliers[currentInput] + 1)%5;
-		} else {
-			multipliers[currentInput] = 3;
-		}
+	// spacebar key was pressed (cycle through multipliers)
+	else if (e.which === 32 && currentInput >= 0 && currentInput < 16) {
+		multipliers[currentInput] = (multipliers[currentInput] + 1)%5;
 		var new_x_offset = multipliers[currentInput]*-70;
 		$('#' + currentInput).css("background-position", new_x_offset);
 	}
