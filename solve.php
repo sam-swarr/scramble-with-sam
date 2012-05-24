@@ -57,6 +57,11 @@ function find_perms($r, $c, $chars) {
 	// start with the first letter
 	$cumul_string = $chars[ind($r,$c)][0];
 	
+	// special case where a 'q' is actually a 'qu'
+	if ($chars[ind($r,$c)][0] === 'q') {
+		$cumul_string = $cumul_string . 'u';
+	}
+	
 	// start with the first letter's location
 	$cumul_coords = array(array($r, $c));
 	
@@ -78,6 +83,11 @@ function find_perms_helper($r, $c, $chars, $used, $cumul_string, $cumul_coords, 
 	foreach ($valid_neighbors as $neighbor) {
 		// create the string that would be formed with this neighbor
 		$string_copy = $cumul_string . $chars[ind($neighbor[0],$neighbor[1])][0];
+		
+		// special case where a 'q' is actually a 'qu'
+		if ($chars[ind($neighbor[0],$neighbor[1])][0] === 'q') {
+			$string_copy = $string_copy . 'u';
+		}
 		
 		
 		// copy the coords and add the coord of this neighbor

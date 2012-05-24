@@ -1,7 +1,5 @@
 var currentInput = -1;
 
-var currentClick = -1;
-
 var wordsArray;
 
 // 0 = no multiplier, 1 = double letter, 2 = double word, 3 = triple letter, 4 = triple word
@@ -14,49 +12,49 @@ function setCurrentInput(i) {
 	currentInput = i;
 }
 
-function inputClick(i) {
-	if (currentClick === i) {
-		multipliers[i] = (multipliers[i] + 1)%5;
-		$('#' + currentClick).val(multipliers[i]);
-	}
-	currentClick = i;
-}
-
 document.onkeyup = function(e) { 
 	// key a-z and an input is selected
 	if (e.which >= 65 && e.which <= 90 && currentInput >= 0 && currentInput < 16) {
-		$('#' + currentInput).val(String.fromCharCode(e.which).toLowerCase());
+		// if a 'q' was entered, add a 'u'
+		if (e.which === 81) {
+			$('#' + currentInput).val(String.fromCharCode(e.which).toUpperCase() + 'u');
+		} else {
+			$('#' + currentInput).val(String.fromCharCode(e.which).toUpperCase());
+		}
 		if ($('#autotab').is(":checked")) {
 			$('#' + currentInput).blur();
 			currentInput++;
 			$('#' + currentInput).focus();
 		}
 	}
+	// 2 key was pressed (double letter/double word)
 	else if (e.which === 50 && currentInput >= 0 && currentInput < 16) {
 		if (multipliers[currentInput] < 3) {
 			multipliers[currentInput] = (multipliers[currentInput] + 1)%3;
 		} else {
 			multipliers[currentInput] = 1;
 		}
-		$('#' + currentInput).val(multipliers[currentInput]);
+		var new_x_offset = multipliers[currentInput]*-70;
+		$('#' + currentInput).css("background-position", new_x_offset);
 	}
+	// 3 key was pressed (triple letter/triple word)
 	else if (e.which === 51 && currentInput >= 0 && currentInput < 16) {
 		if (multipliers[currentInput] > 2) {
 			multipliers[currentInput] = (multipliers[currentInput] + 1)%5;
 		} else {
 			multipliers[currentInput] = 3;
 		}
-		$('#' + currentInput).val(multipliers[currentInput]);
+		var new_x_offset = multipliers[currentInput]*-70;
+		$('#' + currentInput).css("background-position", new_x_offset);
 	}
+	// Enter key
+	else if (e.which === 13) {
+		submit();
+	}
+	// invalid key clears it
 	else {
 		$('#' + currentInput).val('');
 	}
-	
-	// Enter key
-	if (e.which === 13) {
-		submit();
-	}
-	currentClick = -1;
 }
 
 function submit() {
@@ -65,7 +63,7 @@ function submit() {
 		// construct the string of 16 letters
 		var l = '';
 		for (var i = 0; i < 16; i++) {
-			l += $('#' + i).val();
+			l += $('#' + i).val()[0].toLowerCase();
 		}
 		
 		// construct the string of 16 letter multipliers
@@ -105,7 +103,7 @@ function submit() {
 		});
 		
 	} else {
-		alert("Please make sure every square is assigned a letter a-z.");
+		alert("Please make sure every square is assigned a letter a-z (or qu).");
 	}
 }
 
@@ -140,8 +138,8 @@ function compareWordsByPoints(a, b) {
 
 function allLettersValid() {
 	for (var i = 0; i < 16; i++) {
-		var charCode = $('#' + i).val().charCodeAt();
-		if (!(charCode >= 97 && charCode <= 122)) {
+		var charCode = $('#' + i).val().charCodeAt(0);
+		if (!(charCode >= 65 && charCode <= 90)) {
 			return false;
 		}
 	}

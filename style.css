@@ -6,6 +6,16 @@
 	border: 1px solid black;
 }
 
-#hiddeninput {
-	font-size: 16px;
+#letter_table td {
+	border: 0px;
+}
+
+#letter_table input {
+	border: none;
+	background: url("./images/squares.png") no-repeat transparent;
+	background-position: 0px 0px;
+	width: 70px;
+	height: 70px;
+	text-align: center;
+	font-size: 24px;
 }
