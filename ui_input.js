@@ -44,7 +44,7 @@ document.onkeyup = function(e) {
 }
 
 function submit() {
-// DEBUG REMOVE THIS
+/* DEBUG REMOVE THIS
 		$.ajax({
 			type: "GET",
 			url: "solve.php",
@@ -53,8 +53,8 @@ function submit() {
 			wordsArray.sort(compareWordsByPoints);
 			wordsToHTML(wordsArray);
 		});
-// END DEBUG
-/*
+// END DEBUG*/
+
 	//make sure all letters are filled in with chars a-z
 	if (allLettersValid()) {
 		// construct the string of 16 letters
@@ -89,6 +89,8 @@ function submit() {
 			wm += currMult;
 		}
 		
+		$("#results").css("background", "url(\"./images/loading.gif\") no-repeat transparent center");
+		
 		$.ajax({
 			type: "GET",
 			url: "solve.php",
@@ -98,13 +100,13 @@ function submit() {
 			wordsArray.sort(compareWordsByPoints);
 			wordsToHTML(wordsArray);
 		});
-		
 	} else {
 		alert("Please make sure every square is assigned a letter a-z (or qu).");
-	}*/
+	}
 }
 
 function wordsToHTML(wordsArray) {
+	$("#results").css("background", "");
 	$( "#results" ).html(			
 		"<tr id=\"table_header\">" +
 			"<th id=\"word_column\">Word</th>" +

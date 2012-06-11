@@ -107,6 +107,7 @@ body {
 }
 
 #results {
+	height: 11px;
 	border: 1px solid #777;
 	width: 280px;
 	clear: left;
@@ -141,4 +142,13 @@ body {
 .stepsli {
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+#credit {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.bold {
+	font-weight: bold;
 }
