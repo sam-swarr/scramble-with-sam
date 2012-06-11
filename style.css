@@ -1,9 +1,32 @@
-#results {
-	border: 1px solid black;
+h1,h2,h3,h4,h5,p,li,a {
+	font-family: sans-serif;
+}
+
+body {
+	background: #bbb;
+}
+
+.centered_component {
+	width: 340px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#header_wrapper h1 {
+	text-align: center;
+	font-size: 42px;
 }
 
 #results tr,td{
-	border: 1px solid black;
+	border: 1px solid #777;
+}
+
+#letter_table {
+	width: 280px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 #letter_table td {
@@ -23,8 +46,99 @@
 	padding: 0px;
 }
 
-@media screen and (max-device-width: 480px){
-  body{
-    -webkit-text-size-adjust: none;
-  }
+#submit {
+	display: block;
+	border: none;
+	background: url("./images/solvebutton.png") no-repeat transparent;
+	width: 280px;
+	height: 35px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#submit:hover{
+	background-position: 0px -35px;
+}
+
+#submit:active{
+	background-position: 0px -70px;
+}
+
+#checkbox_wrapper {
+	display: block;
+	width: 280px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#autotab {
+	float: left;
+}
+
+#autotab_text {
+	float: left;
+}
+
+#footer {
+	clear: left;
+	float: left:
+}
+
+#footer p {
+	text-align: justify;
+}
+
+#table_header th {
+	border: 1px solid #777;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #8AA637;
+	color: black;
+}
+
+.row_color_1 td {
+	background-color: #EFF5DC;
+}
+
+.row_color_2 td {
+	background-color: #D5DBC1;
+}
+
+#results {
+	border: 1px solid #777;
+	width: 280px;
+	clear: left;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	font-family: sans-serif;
+	text-align: center;
+}
+
+#results td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#results_wrapper {
+	padding-top: 40px;
+}
+
+#word_column {
+	width: 150px;
+}
+
+#steps {
+	padding-left: 10px;
+}
+
+#steps ul {
+	padding-left: 10px;
+}
+
+.stepsli {
+	padding-top: 5px;
+	padding-bottom: 5px;
 }

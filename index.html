@@ -9,10 +9,10 @@
 	<script src="ui_input.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id="header_wrapper" class="centered_div">
-		<h1>Scramble Solver by Sam</h1>
+	<div id="header_wrapper" class="centered_component">
+		<h1>Scramble Solver</h1>
 	</div>
-	<div id="gameboard_div">
+	<div id="gameboard_wrapper" class="centered_component">
 		<table id="letter_table">
 			<tr>
 				<td>
@@ -71,15 +71,39 @@
 				</td>
 			</tr>
 		</table>
-		<input type="checkbox" checked="checked" id="autotab">Auto-tab</input>
-		<input type="submit" value="Solve!" onclick="submit()"/>
+		<div id="button_wrapper>" class="centered_component">
+			<input id="submit" type="submit" value="" onclick="submit()"/>
+		</div>
+		<form id="checkbox_wrapper" action="">
+			<input type="checkbox" checked="checked" id="autotab"><p id="autotab_text">Automatically tab after typing a letter</p></input>
+		</form>
 	</div>
-	<div id="results_wrapper">
+	<div id="results_wrapper" class="centered_component">
 		<table id="results">
 		</table>
 	</div>
-	<div id="footer">
-		<p><b>Created by Sam Swarr</b></p>
+	<div id="footer" class="centered_component">
+		<p class="bold">About:</p>
+		<br>
+		<p>In Zynga's <a href="http://itunes.apple.com/us/app/scramble-with-friends-free/id485084223?mt=8">Scramble with Friends</a>, players are given two minutes to find as many words as possible by stringing together adjacent letters from a 4x4 grid. As an avid fan of the game, I thought it would be interesting to figure out an efficient way to algorithmically find all possible words for a given board. The result is this solver!</p>
+		<br>
+		<p class="bold">To use:</p>
+		<br>
+		<ul id="steps">
+			<li class="stepsli">1. Enter the letters by clicking on the squares above and typing.</li>
+			<li class="stepsli">2. Add any letter or word multipliers by clicking on the appropriate square and hitting SPACE. Hitting SPACE will cycle through the multipliers in the following order:</li>
+			<ul>
+				<li>a. Double Letter</li>
+				<li>b. Double Word</li>
+				<li>c. Triple Letter</li>
+				<li>d. Triple Word</li>
+				<li>e. None</li>
+			</ul>
+			<li class="stepsli">3. Hit ENTER or push the Solve button to solve!.</li>
+			<li class="stepsli">4. Click on entries in the results table to see detailed information!</li>
+		</ul>
+		<br>
+		<p>Created by Sam Swarr in 2012</p>
 	</div>
 </body>
 </html>

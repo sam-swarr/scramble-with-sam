@@ -44,6 +44,17 @@ document.onkeyup = function(e) {
 }
 
 function submit() {
+// DEBUG REMOVE THIS
+		$.ajax({
+			type: "GET",
+			url: "solve.php",
+		}).done(function(output) {
+			wordsArray = jQuery.parseJSON(output);
+			wordsArray.sort(compareWordsByPoints);
+			wordsToHTML(wordsArray);
+		});
+// END DEBUG
+/*
 	//make sure all letters are filled in with chars a-z
 	if (allLettersValid()) {
 		// construct the string of 16 letters
@@ -90,22 +101,27 @@ function submit() {
 		
 	} else {
 		alert("Please make sure every square is assigned a letter a-z (or qu).");
-	}
+	}*/
 }
 
 function wordsToHTML(wordsArray) {
 	$( "#results" ).html(			
-		"<tr>" +
-			"<td>Word</td>" +
-			"<td>Length</td>" +
-			"<td>Points</td>" +
+		"<tr id=\"table_header\">" +
+			"<th id=\"word_column\">Word</th>" +
+			"<th>Length</th>" +
+			"<th>Points</th>" +
 		"</tr>");
-	for (var i = 0; i < this.wordsArray.length; i++) {
+	for (var i = 0; i < this.wordsArray.length - 1; i+=2) {
 		$( "#results" ).append(			
-			"<tr>" +
+			"<tr class=\"row_color_1\">" +
 				"<td>" + this.wordsArray[i][0] + "</td>" +
 				"<td>" + this.wordsArray[i][0].length + "</td>" + 
 				"<td>" + this.wordsArray[i][1] + "</td>" +
+			"</tr>" +
+			"<tr class=\"row_color_2\">" +
+				"<td>" + this.wordsArray[i+1][0] + "</td>" +
+				"<td>" + this.wordsArray[i+1][0].length + "</td>" + 
+				"<td>" + this.wordsArray[i+1][1] + "</td>" +
 			"</tr>");
 	}
 }
